@@ -53,10 +53,10 @@ const App = (props) => {
         <button onClick={resetCounter}>Reset Counter</button>
       </div>
 
-      <p style={{ textAlign: "center" }}>Counter: {counter.count}</p>
+      <p style={{ textAlign: "center" }}>Counter: {counter?.count}</p>
       <label htmlFor="name">Name</label>
       <input type="text" id="name" onChange={handleProfileNameChange} />
-      <p style={{ textAlign: "center" }}>Profile Details: {profile.name}</p>
+      <p style={{ textAlign: "center" }}>Profile Details: {profile?.name}</p>
     </div>
   );
 };
