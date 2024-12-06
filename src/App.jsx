@@ -1,40 +1,36 @@
 import { connect } from "react-redux";
+import {
+  decrementByOne,
+  incrementByOne,
+  incrementByPayload,
+  reset,
+} from "./actions/counterActions";
+import { updateProfileName } from "./actions/profileActions";
 
 const App = (props) => {
   const { dispatch, counter, profile } = props;
 
   const incrementCounter = () => {
-    dispatch({
-      type: "INCREMENT",
-    });
+    dispatch(incrementByOne());
   };
 
   const incrementByCounter = (incrementBy) => {
-    dispatch({
-      type: "INCREMENT",
-      payload: incrementBy,
-    });
+    dispatch(incrementByPayload(incrementBy));
   };
 
   const decrementCounter = () => {
-    dispatch({
-      type: "DECREMENT",
-    });
+    dispatch(decrementByOne());
   };
 
   const resetCounter = () => {
-    dispatch({
-      type: "RESET",
-    });
+    dispatch(reset());
   };
 
   const handleProfileNameChange = (e) => {
     const value = e.target.value;
-    dispatch({
-      type: "UPDATE_NAME",
-      payload: value,
-    });
+    dispatch(updateProfileName(value));
   };
+
   return (
     <div style={{ maxWidth: 400, margin: "0 auto" }}>
       <div

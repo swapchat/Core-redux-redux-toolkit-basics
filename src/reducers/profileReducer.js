@@ -1,3 +1,5 @@
+import { UPDATE_NAME } from "../utils/constants";
+
 const initialState = {
   name: "",
   age: "",
@@ -6,7 +8,7 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "UPDATE_NAME":
+    case UPDATE_NAME:
       return {
         ...state,
         name: action.payload,
