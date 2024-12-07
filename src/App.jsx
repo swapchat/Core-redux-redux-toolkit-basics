@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   decrementByOne,
@@ -8,27 +9,27 @@ import {
 import { updateProfileName } from "./actions/profileActions";
 
 const App = (props) => {
-  const { dispatch, counter, profile } = props;
+  const {
+    counter,
+    profile,
+    increment,
+    incrementByPayload,
+    decrement,
+    reset,
+    updateProfileName,
+  } = props;
 
-  const incrementCounter = () => {
-    dispatch(incrementByOne());
-  };
+  const incrementCounter = () => increment();
 
-  const incrementByCounter = (incrementBy) => {
-    dispatch(incrementByPayload(incrementBy));
-  };
+  const incrementByCounter = () => incrementByPayload(5);
 
-  const decrementCounter = () => {
-    dispatch(decrementByOne());
-  };
+  const decrementCounter = () => decrement();
 
-  const resetCounter = () => {
-    dispatch(reset());
-  };
+  const resetCounter = () => reset();
 
   const handleProfileNameChange = (e) => {
     const value = e.target.value;
-    dispatch(updateProfileName(value));
+    updateProfileName(value);
   };
 
   return (
@@ -57,6 +58,20 @@ const App = (props) => {
   );
 };
 
+App.propTypes = {
+  counter: PropTypes.shape({
+    count: PropTypes.number.isRequired,
+  }).isRequired,
+  profile: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  increment: PropTypes.func.isRequired,
+  incrementByPayload: PropTypes.func.isRequired,
+  decrement: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  updateProfileName: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => {
   return {
     counter: state.counter,
@@ -64,4 +79,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: () => dispatch(incrementByOne()),
+    incrementByPayload: () => dispatch(incrementByPayload(5)),
+    decrement: () => dispatch(decrementByOne()),
+    reset: () => dispatch(reset()),
+    updateProfileName: (payload) => dispatch(updateProfileName(payload)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
