@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   decrementByOne,
   incrementByOne,
@@ -8,28 +7,18 @@ import {
 } from "./actions/counterActions";
 import { updateProfileName } from "./actions/profileActions";
 
-const App = (props) => {
-  const {
-    counter,
-    profile,
-    increment,
-    incrementByPayload,
-    decrement,
-    reset,
-    updateProfileName,
-  } = props;
+const App = () => {
+  const { counter, profile } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-  const incrementCounter = () => increment();
-
-  const incrementByCounter = () => incrementByPayload(5);
-
-  const decrementCounter = () => decrement();
-
-  const resetCounter = () => reset();
+  const incrementCounter = () => dispatch(incrementByOne());
+  const incrementByCounter = (value) => dispatch(incrementByPayload(value));
+  const decrementCounter = () => dispatch(decrementByOne());
+  const resetCounter = () => dispatch(reset());
 
   const handleProfileNameChange = (e) => {
     const value = e.target.value;
-    updateProfileName(value);
+    dispatch(updateProfileName(value));
   };
 
   return (
@@ -58,35 +47,4 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  counter: PropTypes.shape({
-    count: PropTypes.number.isRequired,
-  }).isRequired,
-  profile: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-  increment: PropTypes.func.isRequired,
-  incrementByPayload: PropTypes.func.isRequired,
-  decrement: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  updateProfileName: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => {
-  return {
-    counter: state.counter,
-    profile: state.profile,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increment: () => dispatch(incrementByOne()),
-    incrementByPayload: () => dispatch(incrementByPayload(5)),
-    decrement: () => dispatch(decrementByOne()),
-    reset: () => dispatch(reset()),
-    updateProfileName: (payload) => dispatch(updateProfileName(payload)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
